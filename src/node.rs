@@ -13,11 +13,15 @@ pub enum AttachTarget {
 }
 
 pub struct Node<T> {
+    // `Node<T>` behaves like it has strong references to its children, but it updates the strong
+    // count to its children with `Rc::increment_strong_count` instead of having a
+    // children: Vec<Rc<Node<T>>> field
     parent: Cell<Weak<Node<T>>>,
     first_child: Cell<Weak<Node<T>>>,
     last_child: Cell<Weak<Node<T>>>,
     prev_sibling: Cell<Weak<Node<T>>>,
     next_sibling: Cell<Weak<Node<T>>>,
+
     value: T,
 }
 
